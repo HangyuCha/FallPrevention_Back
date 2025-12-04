@@ -27,7 +27,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleIllegalArg(IllegalArgumentException ex) {
         String msg = ex.getMessage();
         HttpStatus status = "not found".equalsIgnoreCase(msg) ? HttpStatus.NOT_FOUND :
-                "invalid credentials".equalsIgnoreCase(msg) ? HttpStatus.UNAUTHORIZED :
+            "invalid credentials".equalsIgnoreCase(msg) ? HttpStatus.UNAUTHORIZED :
+                "unauthorized".equalsIgnoreCase(msg) ? HttpStatus.UNAUTHORIZED :
                         HttpStatus.BAD_REQUEST;
         return ResponseEntity.status(status).body(Map.of("error", msg));
     }

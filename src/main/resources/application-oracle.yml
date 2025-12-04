@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:oracle:thin:@localhost:1521/orcl
+    url: jdbc:oracle:thin:@localhost:9999/orcl
     username: DB2025_501_3
     password: DB2025_501_3    # 문서에 표시된 팀 초기 PW(변경했다면 변경 PW)
     driver-class-name: oracle.jdbc.OracleDriver
@@ -12,3 +12,5 @@ spring:
 app:
   jwt-secret: change-this-secret-in-prod-rotate-regularly-32plus
   jwt-expiration-ms: 86400000
+  storage:
+    video-dir: ${VIDEO_STORAGE_DIR:storage/videos}

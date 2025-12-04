@@ -31,6 +31,14 @@ public class UserAnalysisSettingsService {
                     return created;
                 });
 
+        // Ensure the shared primary key is always in sync
+        if (settings.getUser() == null) {
+            settings.setUser(user);
+        }
+        if (settings.getUserId() == null) {
+            settings.setUserId(user.getId());
+        }
+
         if (request.getFrameInterval() != null) {
             int safeValue = Math.max(1, request.getFrameInterval());
             settings.setFrameInterval(safeValue);

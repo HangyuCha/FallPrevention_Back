@@ -42,10 +42,11 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(appCorsConfigurationSource()))
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/index.html", "/static/**", "/assets/**").permitAll()
+                    .requestMatchers("/", "/index.html", "/static/**", "/assets/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/auth/register", "/api/auth/login").permitAll()
-                        .requestMatchers("/error").permitAll()
-                        .anyRequest().authenticated()
+                    .requestMatchers(HttpMethod.GET, "/api/videos/*/stream").permitAll()
+                    .requestMatchers("/error").permitAll()
+                    .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JwtAuthenticationFilter(tokenProvider, userService), UsernamePasswordAuthenticationFilter.class);
         return http.build();
