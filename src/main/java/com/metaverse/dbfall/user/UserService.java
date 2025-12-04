@@ -40,6 +40,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+    public User requireByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("user not found"));
+    }
+
     public boolean checkPassword(User user, String rawPassword) {
         return passwordEncoder.matches(rawPassword, user.getPasswordHash());
     }
@@ -84,5 +89,11 @@ public class UserService implements UserDetailsService {
             throw new IllegalArgumentException("user not found");
         }
         userRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteByUsername(String username) {
+        User user = requireByUsername(username);
+        userRepository.delete(user);
     }
 }

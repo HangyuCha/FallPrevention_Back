@@ -57,4 +57,12 @@ public class AuthController {
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
+    @DeleteMapping("/me")
+    public ResponseEntity<?> delete(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        userService.deleteByUsername(authentication.getName());
+        return ResponseEntity.noContent().build();
+    }
 }
